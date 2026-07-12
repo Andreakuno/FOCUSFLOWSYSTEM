@@ -18,6 +18,7 @@ public class StudentLogIn {
         Scanner sc = new Scanner(System.in);
 
          STUDENT student = new STUDENT();
+         STUDY_TRACKER tracker = new STUDY_TRACKER();
 
         System.out.println();
         System.out.println("WELCOME, " + username);
@@ -60,6 +61,7 @@ public class StudentLogIn {
                 student.editRemoveSubject();
                 break;
             case 4:
+                tracker.startSession(student, username);
                 //STUDY TRACKER ang iname sa class, please para dili ko maglibo ig arrange.
                 //mamili ug subject code then if possible kay dili na siya manual input ug time kung when siya mag start
                 //pwede ra "Press "something" to start" tas himoi ug method para ma capture ang actual time nga nag start siya sa Laptop(naa man siguroy code para ana)

@@ -17,8 +17,14 @@ public class StudentLogIn {
     public void StudentLogin() {
         Scanner sc = new Scanner(System.in);
 
+         STUDENT student = new STUDENT();
+
         System.out.println();
         System.out.println("WELCOME, " + username);
+
+         boolean running = true;
+
+        while (running) {
 
         System.out.println("\n========================");
         System.out.println("FOCUSFLOW MENU");
@@ -43,12 +49,15 @@ public class StudentLogIn {
                 //so diri kay kay ang name sa class dapat kay STUDENT(please para dili ko maglibo ig arrange) ang sulod sa diri nga class kay options 1,2 and 3
                 //diri tawga ang para sa add subject nga method
                 //Charita
+                student.addSubject();
                 break;
             case 2:
                 //Charita
+                student.viewSubject();
                 break;
             case 3:
                 //Charita
+                student.editRemoveSubject();
                 break;
             case 4:
                 //STUDY TRACKER ang iname sa class, please para dili ko maglibo ig arrange.
@@ -84,9 +93,14 @@ public class StudentLogIn {
             case 10:
                 break;
             case 11:
+                 running = false;
+                break;
+                default:
+                    System.out.println("Invalid option. Please choose 1-11.");
                 break;
 
         }
+    }
     }
 }
 

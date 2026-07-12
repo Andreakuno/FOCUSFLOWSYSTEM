@@ -1,0 +1,118 @@
+package FocusFlow;
+
+import java.util.Scanner;
+
+public class STUDENT {
+    private static final int maxSubjects = 20;
+
+    String[] subjectNames = new String[maxSubjects];
+    String[] subjectCodes = new String[maxSubjects];
+    int subjectCount = 0;
+
+    Scanner sc = new Scanner(System.in);
+
+    // add
+    public void addSubject() {
+        if (subjectCount >= maxSubjects) {
+            System.out.println("Subject list is full ! you cannot add more subjects.");
+            return;
+        }
+
+        String choice = "yes";
+
+        while (choice.equalsIgnoreCase("yes") && subjectCount < maxSubjects) {
+            System.out.print("Enter Subject Name: ");   String name = sc.nextLine();
+
+            System.out.print("Enter Subject Code: ");   String code = sc.nextLine();
+
+            subjectNames[subjectCount] = name;
+            subjectCodes[subjectCount] = code;
+            subjectCount++;
+
+            System.out.println("The Subject is added successfully!");
+
+            if (subjectCount < maxSubjects) {
+                System.out.print("do you wanna add another subject? (yes/no): ");
+                choice = sc.nextLine();
+            } else {
+                System.out.println("Maximum subject limit reached.");
+            }
+        }
+    }
+
+    //  view
+    public void viewSubject() {
+        if (subjectCount == 0) {
+            System.out.println("No subjects added yet.");
+            return;
+        }
+
+        System.out.println("\n========== SUBJECT LIST ==========");
+        for (int i = 0; i < subjectCount; i++) {
+            System.out.println((i + 1) + ". " + subjectNames[i] + " (" + subjectCodes[i] + ")");
+        }
+        System.out.println("===================================");
+    }
+
+    // edit or remove
+    public void editRemoveSubject() {
+        if (subjectCount == 0) {
+            System.out.println("No subjects to edit or remove.");
+            return;
+        }
+
+        viewSubject();
+
+        System.out.print("Enter subject number to edit/remove: ");
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input! Please enter a number.");
+            sc.next();
+            System.out.print("Enter subject number to edit/remove: ");
+        }
+        int index = sc.nextInt();
+        sc.nextLine();
+
+        if (index < 1 || index > subjectCount) {
+            System.out.println("Invalid subject number.");
+            return;
+        }
+        index--; // convert to 0-based array index
+
+        System.out.println("[1] Edit Subject");
+        System.out.println("[2] Remove Subject");
+        System.out.print("Choose Option: ");
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input! Please enter a number.");
+            sc.next();
+            System.out.print("Choose Option: ");
+        }
+        int action = sc.nextInt();
+        sc.nextLine();
+
+        if (action == 1) {
+            System.out.print("Enter new Subject Name: ");
+            String newName = sc.nextLine();
+            System.out.print("Enter new Subject Code: ");
+            String newCode = sc.nextLine();
+
+            subjectNames[index] = newName;
+            subjectCodes[index] = newCode;
+            System.out.println("Subject updated successfully!");
+
+        } else if (action == 2) {
+            // shift all subjects after the removed one, one step to the left
+            for (int i = index; i < subjectCount - 1; i++) {
+                subjectNames[i] = subjectNames[i + 1];
+                subjectCodes[i] = subjectCodes[i + 1];
+            }
+            subjectNames[subjectCount - 1] = null;
+            subjectCodes[subjectCount - 1] = null;
+            subjectCount--;
+            System.out.println("Subject removed successfully!");
+
+        } else {
+            System.out.println("Invalid option.");
+        }
+    }
+}
+

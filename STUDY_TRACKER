@@ -1,0 +1,132 @@
+package FocusFlow;
+
+import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+import java.util.Random;
+
+public class STUDY_TRACKER {
+
+    private Scanner sc = new Scanner(System.in);
+    private Random random = new Random();
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+
+    private String[] breakSuggestions = {
+            "Drink a glass of water to stay hydrated! You're doing great!",
+            "Stand up, stretch your arms, and take a deep breath.",
+            "Rest your eyes for a bit. Look away from the screen.",
+            "Inhale confidence, exhale stress. Keep up the amazing work!",
+            "Walk around your room or listen to a relaxing song for a minute."
+    };
+
+
+    private String[] motivationalQuotes = {
+            "\nSuccess is the sum of small efforts, repeated day in and day out. — Robert Collier",
+            "\nThe secret of getting ahead is getting started. — Mark Twain",
+            "\nFocus on being productive instead of busy. — Tim Ferriss",
+            "\nIt always seems impossible until it's done. — Nelson Mandela",
+            "\nMake each day your masterpiece. — John Wooden",
+            "\nBelieve you can and you're halfway there. — Theodore Roosevelt"
+    };
+
+    public void startSession(STUDENT student, String username) {
+        if (student.subjectCount == 0) {
+            System.out.println("\nYou cannot start a study session without adding subjects first!");
+            return;
+        }
+
+        student.viewSubject();
+
+        int foundIndex = -1;
+        String chosenSubject = "";
+
+
+        while (foundIndex == -1) {
+            System.out.print("Select the code of the subject you want to study: ");
+            String inputCode = sc.nextLine().trim();
+
+            for (int i = 0; i < student.subjectCount; i++) {
+                if (student.subjectCodes[i].equalsIgnoreCase(inputCode)) {
+                    foundIndex = i;
+                    break;
+                }
+            }
+
+            if (foundIndex == -1) {
+                System.out.println("Invalid input! No matching subject code found. Please try again.\n");
+            }
+        }
+
+        chosenSubject = student.subjectNames[foundIndex] + " (" + student.subjectCodes[foundIndex] + ")";
+        System.out.println("\nSelected subject: " + chosenSubject);
+        System.out.print("Press ENTER to START the session...");
+        sc.nextLine();
+
+
+
+        LocalDateTime startTime = LocalDateTime.now();
+        System.out.println("\nSession Started at: " + startTime.format(timeFormatter));
+
+        long totalBreakMinutes = 0;
+        boolean sessionRunning = true;
+
+
+        while (sessionRunning) {
+            System.out.println("\n========================");
+            System.out.println("    ACTIVE SESSION      ");
+            System.out.println("========================");
+            System.out.println("[1] Take a Break");
+            System.out.println("[2] End Study Session");
+            System.out.print("Choose action: ");
+            String action = sc.nextLine();
+
+            if (action.equals("1")) {
+                LocalDateTime breakStart = LocalDateTime.now();
+                System.out.println("\nBreak started at: " + breakStart.format(timeFormatter));
+
+                String suggestion = breakSuggestions[random.nextInt(breakSuggestions.length)];
+                System.out.println("\n" + suggestion);
+
+                System.out.print("\nPress ENTER to RESUME studying...");
+                sc.nextLine();
+
+                LocalDateTime breakEnd = LocalDateTime.now();
+                long breakDuration = Duration.between(breakStart, breakEnd).toMinutes();
+                totalBreakMinutes += breakDuration;
+
+                System.out.println("Resumed studying at: " + breakEnd.format(timeFormatter));
+            }
+            else if (action.equals("2")) {
+                sessionRunning = false;
+            }
+            else {
+                System.out.println("Invalid choice. Please select 1 or 2.");
+            }
+        }
+
+
+        LocalDateTime endTime = LocalDateTime.now();
+        System.out.println("\nSession Ended at: " + endTime.format(timeFormatter));
+
+        long totalElapsedMinutes = Duration.between(startTime, endTime).toMinutes();
+        long actualStudyMinutes = totalElapsedMinutes - totalBreakMinutes;
+
+
+        if (actualStudyMinutes < 0) {
+            actualStudyMinutes = 0;
+        }
+
+        System.out.println("\n================================================");
+        System.out.println("SUMMARY FOR: " + username.toUpperCase());
+        System.out.println("Subject Studied: " + chosenSubject);
+        System.out.println("Total Time Studied: " + actualStudyMinutes + " minute(s)");
+        System.out.println("================================================");
+
+
+        String quote = motivationalQuotes[random.nextInt(motivationalQuotes.length)];
+        System.out.println("\nMOTIVATION FOR YOU:");
+        System.out.println(quote + "\n");
+    }
+}

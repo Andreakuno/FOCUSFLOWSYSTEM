@@ -1,0 +1,35 @@
+public class SummaryGenerator {
+    
+    public static void addRecord(){
+        history.add(record);
+    }
+    //SEARCH
+    public static void search(String keyword){
+        System.out.println("\n--- SEARCH RESULTS ---");
+        boolean found = false;
+        
+        for (String record : history){
+            if (record.toLowerCase().contains(keyword.toLowerCase())){
+                System.out.println(record);
+                found = true;
+            }
+        }
+        if (!found){
+            System.out.println("No record found.");
+        }
+    }
+    
+    //DAILY SUMMARY
+    public static void DailySummary(){
+        System.out.println("\n--- Daily Summary ---");
+        System.out.println("Total sessions today: " + history.size());
+    }
+    //WEEKLY SUMMARY
+    public static void WeeklySummary(){
+        System.out.println("\n--- Weekly Summary ---");
+        System.out.println("Total sessions this week: " + history.size();
+    }
+    
+    //AYANAAAAAAAAAAAAAA INGNA RAKO UG MALI2 KAY UTRO KO GALIBOG HUHHUUHUUHUHUHU
+//wako kasabot aning github jud pud huhuuhuh
+}

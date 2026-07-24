@@ -81,14 +81,17 @@ public class StudentLogIn {
                 //ang name sa class kay SUMMARY GENERATOR
                 //mag search ang user by subject name/code or date then mo display iyang ginapangita dayon
                 //Mikka
+                searchHistory();
                 break;
             case 7:
                 //same class sa Case 6
                 //Total minutes today, subject with most time today, number of sessions today
+                dailySummary();
                 break;
             case 8:
                 //same class sa Case 6
                 //Total minutes this week, breakdown per day or per subject, busiest day
+                weeklySummary();
                 break;
             case 9:
                 break;
